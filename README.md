@@ -31,7 +31,7 @@ It has 6 Entities\
     3. Fact\
     4. Feedback\
     5. Image\
-    6. Suggestions\
+    6. Suggestions
     
 That have relationships described in the following diagram
 
