@@ -44,29 +44,29 @@ Each features has a Controller.
 The CRUD controller uses the following route pattern:
 "/crud/{entity}"
 
-For CREATE, the HTTP verb used is POST and the entity is sent in the Request Body, as a JSON.
+For **CREATE**, the HTTP verb used is **POST** and the entity is sent in the Request Body, as a JSON.
 
-For READ, the HTTP verb used is GET, a certain entity can be read by adding it as a query paramter.\
-If the route "/{entity}s" is used, (for example /animals", all the entities that exist in the persistance layer are retrieved.
+For **READ**, the HTTP verb used is **GET**, a certain entity can be read by adding it as a query paramter.\
+If the route "/{entity}s" is used, (for example /animals"), all the entities that exist in the persistance layer are retrieved.
 
-For UPDATE, the HTTP verb used is PUT and the entity is sent in the Request Body, including the id.
+For **UPDATE**, the HTTP verb used is **PUT** and the entity is sent in the Request Body, including the id.
 
-For DELETE, the HTTP verb used is DELETE and the entity is sent selected by sending the id as a query paramter.
+For **DELETE**, the HTTP verb used is **DELETE** and the entity is sent selected by sending the id as a query paramter.
 
 ### Random
 
-The route "/random/fact" is used for getting 1 random fact, a "count" parameter can be specified as a query parameter to get more random facts.
+The route "**/random/fact**" is used for getting 1 random fact, a "count" parameter can be specified as a query parameter to get more random facts.
 
-The route "/random/{animal_name}/fact" can be specified to get random facts that are only related to a specific animal.
+The route "**/random/{animal_name}/fact**" can be specified to get random facts that are only related to a specific animal.
 
 ### User reactions
 
-Users can send comments and feedback to facts by using the route "/reaction/{reaction_type}/fact/{fact_id}", where reaction_type can be either "comment" or "feedback".
+Users can send comments and feedback to facts by using the route "**/reaction/{reaction_type}/fact/{fact_id}**", where reaction_type can be either "**comment**" or "**feedback**".
 
 ### Recommendations
 
-Users can send suggestions by using the route "/recommendation/{animal}/fact".
+Users can send Suggestions by using the route "**/recommendation/{animal}/fact**".
 
-Admins can check all pending suggestions using "/recommendation/queue" and can either approve or reject suggestions with "/recommendation/{suggestion_id}/{approve/reject}"
+Admins can check all pending suggestions using "**/recommendation/queue**" and can either approve or reject suggestions with "**/recommendation/{suggestion_id}/{approve/reject}**"
 
 Approved suggestions are added as Facts.
