@@ -1,6 +1,7 @@
 package demo.service;
 
 public class CustomException extends RuntimeException {
+
     public enum ErrorCode {
         BAD_CREDENTIALS,
         ANIMAL_COULD_NOT_BE_CREATED,
@@ -35,7 +36,7 @@ public class CustomException extends RuntimeException {
         SUGGESTION_COULD_NOT_BE_DELETED,
         SUGGESTION_COULD_NOT_BE_APPROVED,
         SUGGESTION_COULD_NOT_BE_REJECTED,
-        FACT_ALREADY_EXISTS_FOR_SUGGESTION,
+        SUGGESTION_ALREADY_APPROVED,
         RANDOM_FACT_COULD_NOT_BE_READ,
         REPOSITORY_COUNT_NOT_BE_FOUND_FOR_CLASS,
         OBJECT_COULD_NOT_BE_CREATED,
@@ -155,8 +156,8 @@ public class CustomException extends RuntimeException {
     public static CustomException suggestionCouldNotBeRejected() {
         return new CustomException(ErrorCode.SUGGESTION_COULD_NOT_BE_REJECTED);
     }
-    public static CustomException factAlreadyExistsForSuggestion() {
-        return new CustomException(ErrorCode.FACT_ALREADY_EXISTS_FOR_SUGGESTION);
+    public static CustomException suggestionAlreadyApproved() {
+        return new CustomException(ErrorCode.SUGGESTION_ALREADY_APPROVED);
     }
     public static CustomException randomFactCouldNotBeRead() {
         return new CustomException(ErrorCode.RANDOM_FACT_COULD_NOT_BE_READ);

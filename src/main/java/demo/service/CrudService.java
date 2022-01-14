@@ -120,7 +120,7 @@ public class CrudService {
     }
 
     private void checkCredentials(Credentials credentials) {
-        if(!adminName.equals(credentials.getEmail()) || !adminPassword.equals(credentials.getPassword())) {
+        if(!adminName.equals(credentials.getName()) || !adminPassword.equals(credentials.getPassword())) {
             throw badCredentials();
         }
     }

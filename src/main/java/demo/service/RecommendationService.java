@@ -74,14 +74,7 @@ public class RecommendationService {
     public void approveSuggestion(Credentials credentials, Long suggestionId) {
         checkCredentials(credentials);
         try {
-            Optional<Suggestion> ifExistingSuggestion = suggestionRepository.findById(suggestionId);
-            if (ifExistingSuggestion.isEmpty()) {
-                throw CustomException.suggestionCouldNotBeFound();
-            }
-            Suggestion suggestion = ifExistingSuggestion.get();
-            if (suggestion.getFact() != null){
-                throw CustomException.factAlreadyExistsForSuggestion();
-            }
+            Suggestion suggestion = getValidSuggestion(suggestionId);
             Fact fact = new Fact(suggestion);
             suggestion.setFact(fact);
             suggestion.setRejected(false);
@@ -102,11 +95,7 @@ public class RecommendationService {
     public void rejectSuggestion(Credentials credentials, Long suggestionId) {
         checkCredentials(credentials);
         try {
-            Optional<Suggestion> ifExistingSuggestion = suggestionRepository.findById(suggestionId);
-            if (ifExistingSuggestion.isEmpty()) {
-                throw CustomException.suggestionCouldNotBeFound();
-            }
-            Suggestion suggestion = ifExistingSuggestion.get();
+            Suggestion suggestion = getValidSuggestion(suggestionId);
             suggestion.setApproved(false);
             suggestion.setRejected(true);
             suggestionRepository.save(suggestion);
@@ -121,9 +110,20 @@ public class RecommendationService {
         }
     }
 
+    private Suggestion getValidSuggestion(Long suggestionId){
+        Optional<Suggestion> ifExistingSuggestion = suggestionRepository.findById(suggestionId);
+        if (ifExistingSuggestion.isEmpty()) {
+            throw CustomException.suggestionCouldNotBeFound();
+        }
+        Suggestion suggestion = ifExistingSuggestion.get();
+        if (suggestion.getApproved()){
+            throw CustomException.suggestionAlreadyApproved();
+        }
+        return suggestion;
+    }
 
     private void checkCredentials(Credentials credentials) {
-        if(!adminName.equals(credentials.getEmail()) || !adminPassword.equals(credentials.getPassword())) {
+        if(!adminName.equals(credentials.getName()) || !adminPassword.equals(credentials.getPassword())) {
             throw badCredentials();
         }
     }

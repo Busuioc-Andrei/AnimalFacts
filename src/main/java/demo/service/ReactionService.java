@@ -1,12 +1,10 @@
 package demo.service;
 
 import demo.models.*;
-import demo.repository.AnimalRepository;
 import demo.repository.CommentRepository;
 import demo.repository.FactRepository;
 import demo.repository.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,15 +24,11 @@ public class ReactionService {
     @Transactional
     public void saveComment(Long factId, Comment comment){
         try {
-            Optional<Fact> ifExistingFact = factRepository.findById(factId);
-            if (ifExistingFact.isEmpty()) {
-                throw CustomException.factCouldNotBeFound();
-            }
-            comment.setFact(ifExistingFact.get());
+            Fact fact = getValidFact(factId);
+            comment.setFact(fact);
             comment.setCreatedAt(LocalDateTime.now());
             comment.setModifiedAt(LocalDateTime.now());
             commentRepository.save(comment);
-
         }
         catch (RuntimeException e) {
             if (e instanceof CustomException) {
@@ -48,15 +42,11 @@ public class ReactionService {
     @Transactional
     public void saveFeedback(Long factId, Feedback feedback){
         try {
-            Optional<Fact> ifExistingFact = factRepository.findById(factId);
-            if (ifExistingFact.isEmpty()) {
-                throw CustomException.factCouldNotBeFound();
-            }
-            feedback.setFact(ifExistingFact.get());
+            Fact fact = getValidFact(factId);
+            feedback.setFact(fact);
             feedback.setCreatedAt(LocalDateTime.now());
             feedback.setModifiedAt(LocalDateTime.now());
             feedbackRepository.save(feedback);
-
         }
         catch (RuntimeException e) {
             if (e instanceof CustomException) {
@@ -65,5 +55,13 @@ public class ReactionService {
                 throw CustomException.feedbackCouldNotBeCreated();
             }
         }
+    }
+
+    private Fact getValidFact(Long factId){
+        Optional<Fact> ifExistingFact = factRepository.findById(factId);
+        if (ifExistingFact.isEmpty()) {
+            throw CustomException.factCouldNotBeFound();
+        }
+        return ifExistingFact.get();
     }
 }
