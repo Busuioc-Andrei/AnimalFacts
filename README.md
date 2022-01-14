@@ -25,13 +25,13 @@ This is a Spring Boot API that is used for sharing Random Animal Facts
     3. Approve a Suggestion, creating an entry in the Fact entity, as an Admin
     4. Reject a Suggestion, as an Admin
     
-It has 6 Entities
-    1. Animal
-    2. Comment
-    3. Fact
-    4. Feedback
-    5. Image
-    6. Suggestions
+It has 6 Entities\
+    1. Animal\
+    2. Comment\
+    3. Fact\
+    4. Feedback\
+    5. Image\
+    6. Suggestions\
     
 That have relationships described in the following diagram
 
