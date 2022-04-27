@@ -1,4 +1,4 @@
-package demo.controller;
+package demo.web;
 
 import demo.models.Suggestion;
 import demo.service.Credentials;

@@ -3,6 +3,7 @@ package demo.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Animal extends BaseModel{
     private List<Image> images;
 
     @Column(length = 100, unique = true, nullable = false)
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
     public Animal(Long id, List<Image> images, String name, LocalDateTime createdAt, LocalDateTime modifiedAt) {

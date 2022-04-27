@@ -1,4 +1,4 @@
-package demo.controller;
+package demo.web;
 
 import demo.models.Comment;
 import demo.models.Feedback;

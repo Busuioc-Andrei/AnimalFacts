@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<div th:replace="base :: header">  </div>
+<div th:replace="base :: navbar">  </div>
+<body>
+    <div class="container ">
+    <h2>Edit Animal</h2>
+    <form class="d-flex flex-column align-items-start" action="#"
+          th:action="@{/animal/update/{id}(id=${animal.id})}"
+          th:object="${animal}"
+          method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Name">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+        <input class="btn btn-primary mt-2" type="submit" value="Update Animal">
+    </form>
+    </div>
+</body>
+</html>

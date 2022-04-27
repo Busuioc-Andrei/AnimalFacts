@@ -1,4 +1,4 @@
-package demo.controller;
+package demo.web;
 
 import demo.models.Fact;
 import demo.service.RandomService;

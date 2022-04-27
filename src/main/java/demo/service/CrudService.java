@@ -4,6 +4,9 @@ import demo.models.*;
 import demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,8 +40,7 @@ public class CrudService {
 
 
     @Transactional
-    public <T extends BaseModel> void create (Credentials credentials, T model){
-        checkCredentials(credentials);
+    public <T extends BaseModel> void create (T model){
         try {
             BaseModelRepository<T> repository = getRepository(model.getClass());
             model.setCreatedAt(LocalDateTime.now());
@@ -54,8 +56,7 @@ public class CrudService {
         }
     }
 
-    public <T extends BaseModel> T read(Credentials credentials, Class modelClass, Long id){
-        checkCredentials(credentials);
+    public <T extends BaseModel> T read(Class modelClass, Long id){
         try {
             BaseModelRepository<T> repository = getRepository(modelClass);
             return findIfExists(repository, id);
@@ -69,8 +70,7 @@ public class CrudService {
         }
     }
 
-    public <T extends BaseModel> List<T> readList(Credentials credentials, Class modelClass){
-        checkCredentials(credentials);
+    public <T extends BaseModel> List<T> readList(Class modelClass){
         try {
             BaseModelRepository<T> repository = getRepository(modelClass);
             return (List<T>) repository.findAll();
@@ -85,8 +85,7 @@ public class CrudService {
     }
 
     @Transactional
-    public <T extends BaseModel> void update(Credentials credentials, T model){
-        checkCredentials(credentials);
+    public <T extends BaseModel> void update(T model){
         try {
             BaseModelRepository<T> repository = getRepository(model.getClass());
             T ifExists = findIfExists(repository, model.getId());
@@ -103,8 +102,7 @@ public class CrudService {
     }
 
     @Transactional
-    public <T extends BaseModel> void delete(Credentials credentials, Class modelClass, Long id){
-        checkCredentials(credentials);
+    public <T extends BaseModel> void delete(Class modelClass, Long id){
         try {
             BaseModelRepository<T> repository = getRepository(modelClass);
             T ifExists = findIfExists(repository, id);
@@ -119,11 +117,10 @@ public class CrudService {
         }
     }
 
-    private void checkCredentials(Credentials credentials) {
-        if(!adminName.equals(credentials.getName()) || !adminPassword.equals(credentials.getPassword())) {
-            throw badCredentials();
-        }
-    }
+//    public Page<BaseModel> findPaginated(Class c, int pageNo, int pageSize) {
+//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+//        return this.getRepository(c).findAll(pageable);
+//    }
 
     private <T extends BaseModel> BaseModelRepository<T> getRepository(Class c){
         if (c == Animal.class)

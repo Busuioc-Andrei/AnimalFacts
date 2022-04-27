@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<div th:replace="base :: header">  </div>
+<div th:replace="base :: navbar">  </div>
+<body>
+<div class="container mt-4">
+    <h2>Add Fact</h2>
+    <form class="d-flex flex-column align-items-start" action="#" th:action="@{/fact/add}" th:object="${fact}" method="post">
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" th:field="*{description}" id="description" placeholder="Description">
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{fact}"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label for="animal">Animal</label>
+            <select id="animal" name="animal" class="form-control custom-select" th:field="*{animal}">
+                <div th:each="animal : ${listAnimals}"}>
+                <option th:text="${animal.name}" th:value="${animal.id}"></option>
+                </div>
+            </select>
+        </div>
+
+        <input class="btn btn-primary mt-2" type="submit" value="Add Fact">
+    </form>
+</div>
+</body>
+</html>

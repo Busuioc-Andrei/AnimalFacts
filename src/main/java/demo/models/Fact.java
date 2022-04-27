@@ -96,6 +96,7 @@ public class Fact extends BaseModel{
             Fact fact = (Fact) model;
             this.description = fact.getDescription();
             this.modifiedAt = LocalDateTime.now();
+            this.animal = ((Fact) model).getAnimal();
         }
     }
 }

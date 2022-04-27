@@ -1,4 +1,4 @@
-package demo.controller;
+package demo.web;
 
 import demo.service.CustomException;
 import org.springframework.http.HttpStatus;

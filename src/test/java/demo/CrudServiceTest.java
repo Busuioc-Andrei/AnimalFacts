@@ -35,7 +35,6 @@ public class CrudServiceTest {
     private static Optional<Animal> animal;
     private static List<Animal> animals = new ArrayList<>();
     private static LocalDateTime now = LocalDateTime.now();
-    private static Credentials credentials = new Credentials("Basic YWRtaW46dGVzdHBhc3M=");
 
     @BeforeAll
     public static void setup() {
@@ -52,20 +51,20 @@ public class CrudServiceTest {
     @Test
     public void testAnimalCreationHappy() {
         when(animalRepository.save(any())).thenReturn(null);
-        crudService.create(credentials, animal.get());
+        crudService.create(animal.get());
     }
 
     @Test
     public void testAnimalCreationUnHappy() {
         when(animalRepository.save(any())).thenReturn(null);
-        crudService.create(credentials, animal.get());
+        crudService.create(animal.get());
     }
 
     @Test
     public void testAnimalReadHappy() {
         when(animalRepository.findById(animal.get().getId())).thenReturn(animal);
         Animal expectedAnimal = animal.get();
-        Animal actualAnimal = crudService.read(credentials, Animal.class, animal.get().getId());
+        Animal actualAnimal = crudService.read(Animal.class, animal.get().getId());
         assertEquals(expectedAnimal, actualAnimal);
     }
 
@@ -73,7 +72,7 @@ public class CrudServiceTest {
     public void testAnimalReadUnHappy() {
         when(animalRepository.findById(animal.get().getId())).thenReturn(Optional.empty());
         CustomException exception = assertThrows(CustomException.class,
-                () -> crudService.read(credentials, Animal.class, animal.get().getId()));
+                () -> crudService.read(Animal.class, animal.get().getId()));
         assertEquals(CustomException.ErrorCode.OBJECT_COULD_NOT_BE_FOUND, exception.getError());
     }
 
@@ -81,7 +80,7 @@ public class CrudServiceTest {
     public void testAnimalReadListHappy() {
         when(animalRepository.findAll()).thenReturn(animals);
         List<Animal> expectedAnimals = animals;
-        List<Animal> actualAnimals = crudService.readList(credentials, Animal.class);
+        List<Animal> actualAnimals = crudService.readList(Animal.class);
         assertEquals(expectedAnimals, actualAnimals);
     }
 
@@ -89,12 +88,12 @@ public class CrudServiceTest {
     public void testAnimalUpdateHappy() {
         when(animalRepository.findById(animal.get().getId())).thenReturn(animal);
         when(animalRepository.save(any())).thenReturn(null);
-        crudService.update(credentials, animal.get());
+        crudService.update(animal.get());
     }
 
     @Test
     public void testAnimalDeleteHappy() {
         when(animalRepository.findById(animal.get().getId())).thenReturn(animal);
-        crudService.delete(credentials, Animal.class, animal.get().getId());
+        crudService.delete(Animal.class, animal.get().getId());
     }
 }
