@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static demo.service.CustomException.badCredentials;
-
 @Service
 public class RecommendationService {
 
@@ -56,8 +54,7 @@ public class RecommendationService {
         }
     }
 
-    public List<Suggestion> readQueue(Credentials credentials) {
-        checkCredentials(credentials);
+    public List<Suggestion> readQueue() {
         try {
             return suggestionRepository.findAllByApprovedEqualsAndRejectedEquals(false, false);
         }
@@ -71,8 +68,7 @@ public class RecommendationService {
     }
 
     @Transactional
-    public void approveSuggestion(Credentials credentials, Long suggestionId) {
-        checkCredentials(credentials);
+    public void approveSuggestion(Long suggestionId) {
         try {
             Suggestion suggestion = getValidSuggestion(suggestionId);
             Fact fact = new Fact(suggestion);
@@ -92,8 +88,7 @@ public class RecommendationService {
     }
 
     @Transactional
-    public void rejectSuggestion(Credentials credentials, Long suggestionId) {
-        checkCredentials(credentials);
+    public void rejectSuggestion(Long suggestionId) {
         try {
             Suggestion suggestion = getValidSuggestion(suggestionId);
             suggestion.setApproved(false);
@@ -120,12 +115,6 @@ public class RecommendationService {
             throw CustomException.suggestionAlreadyApproved();
         }
         return suggestion;
-    }
-
-    private void checkCredentials(Credentials credentials) {
-        if(!adminName.equals(credentials.getName()) || !adminPassword.equals(credentials.getPassword())) {
-            throw badCredentials();
-        }
     }
 
 }

@@ -24,25 +24,20 @@ public class RecommendationController {
     }
 
     @GetMapping("/queue")
-    public ResponseEntity<List<Suggestion>> getSuggestions(@RequestHeader(Credentials.AUTHORIZATION) String header){
-        Credentials credentials = new Credentials(header);
-        List<Suggestion> suggestions = service.readQueue(credentials);
+    public ResponseEntity<List<Suggestion>> getSuggestions(){
+        List<Suggestion> suggestions = service.readQueue();
         return suggestions.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(suggestions);
     }
 
     @PutMapping("/{suggestion_id}/approve")
-    public ResponseEntity<Void> approveSuggestion(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                  @PathVariable("suggestion_id") Long suggestionId){
-        Credentials credentials = new Credentials(header);
-        service.approveSuggestion(credentials, suggestionId);
+    public ResponseEntity<Void> approveSuggestion(@PathVariable("suggestion_id") Long suggestionId){
+        service.approveSuggestion(suggestionId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{suggestion_id}/reject")
-    public ResponseEntity<Void> rejectSuggestion(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                 @PathVariable("suggestion_id") Long suggestionId){
-        Credentials credentials = new Credentials(header);
-        service.rejectSuggestion(credentials, suggestionId);
+    public ResponseEntity<Void> rejectSuggestion(@PathVariable("suggestion_id") Long suggestionId){
+        service.rejectSuggestion(suggestionId);
         return ResponseEntity.noContent().build();
     }
 

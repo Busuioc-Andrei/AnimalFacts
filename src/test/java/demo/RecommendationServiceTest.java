@@ -42,7 +42,6 @@ public class RecommendationServiceTest {
     private static Optional<Suggestion> suggestion;
     private static Optional<Suggestion> suggestionApproved;
     private static LocalDateTime now = LocalDateTime.now();
-    private static Credentials credentials = new Credentials("Basic YWRtaW46dGVzdHBhc3M=");
 
     @BeforeAll
     public static void setup() {
@@ -71,7 +70,7 @@ public class RecommendationServiceTest {
     public void testSuggestionDoesNotExist() {
         when(suggestionRepository.findById(suggestion.get().getId())).thenReturn(Optional.empty());
         CustomException exception = assertThrows(CustomException.class,
-                () -> recommendationService.approveSuggestion(credentials, suggestion.get().getId()));
+                () -> recommendationService.approveSuggestion(suggestion.get().getId()));
         assertEquals(CustomException.ErrorCode.SUGGESTION_COULD_NOT_BE_FOUND, exception.getError());
     }
 
@@ -79,7 +78,7 @@ public class RecommendationServiceTest {
     public void testSuggestionAlreadyApproved() {
         when(suggestionRepository.findById(suggestionApproved.get().getId())).thenReturn(suggestionApproved);
         CustomException exception = assertThrows(CustomException.class,
-                () -> recommendationService.approveSuggestion(credentials, suggestionApproved.get().getId()));
+                () -> recommendationService.approveSuggestion(suggestionApproved.get().getId()));
         assertEquals(CustomException.ErrorCode.SUGGESTION_ALREADY_APPROVED, exception.getError());
     }
 
@@ -88,6 +87,6 @@ public class RecommendationServiceTest {
         when(suggestionRepository.findById(suggestion.get().getId())).thenReturn(suggestion);
         when(suggestionRepository.save(any())).thenReturn(null);
         when(factRepository.save(any())).thenReturn(null);
-        recommendationService.approveSuggestion(credentials, suggestion.get().getId());
+        recommendationService.approveSuggestion(suggestion.get().getId());
     }
 }

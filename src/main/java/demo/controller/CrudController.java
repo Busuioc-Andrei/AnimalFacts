@@ -21,241 +21,195 @@ public class CrudController {
 
     //animal
     @PostMapping("/animal")
-    public ResponseEntity<Void> postAnimal(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                           @RequestBody Animal animal){
-        Credentials credentials = new Credentials(header);
-        service.create(credentials, animal);
+    public ResponseEntity<Void> postAnimal(@RequestBody Animal animal){
+        service.create(animal);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/animal")
-    public ResponseEntity<Animal> getAnimals(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                             @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        Animal animal = service.read(credentials, Animal.class, id);
+    public ResponseEntity<Animal> getAnimals(@RequestParam Long id){
+        Animal animal = service.read(Animal.class, id);
         return ResponseEntity.ok(animal);
     }
 
     @GetMapping("/animals")
-    public ResponseEntity<List<Animal>> getAnimals(@RequestHeader(Credentials.AUTHORIZATION) String header){
-        Credentials credentials = new Credentials(header);
-        List<Animal> animals = service.readList(credentials, Animal.class);
+    public ResponseEntity<List<Animal>> getAnimals(){
+        List<Animal> animals = service.readList(Animal.class);
         return animals.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(animals);
     }
 
     @PutMapping("/animal")
-    public ResponseEntity<List<Animal>> putAnimal(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                  @RequestBody Animal animal){
-        Credentials credentials = new Credentials(header);
-        service.update(credentials, animal);
+    public ResponseEntity<List<Animal>> putAnimal(@RequestBody Animal animal){
+        service.update(animal);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/animal")
-    public ResponseEntity<List<Animal>> deleteAnimal(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                     @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        service.delete(credentials, Animal.class, id);
+    public ResponseEntity<List<Animal>> deleteAnimal(@RequestParam Long id){
+        service.delete(Animal.class, id);
         return ResponseEntity.noContent().build();
     }
 
     //comment
     @PostMapping("/comment")
-    public ResponseEntity<Void> postComment(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                            @RequestBody Comment comment){
-        Credentials credentials = new Credentials(header);
-        service.create(credentials, comment);
+    public ResponseEntity<Void> postComment(@RequestBody Comment comment){
+        service.create(comment);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/comment")
-    public ResponseEntity<Comment> getComments(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                               @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        Comment comment = service.read(credentials, Comment.class, id);
+    public ResponseEntity<Comment> getComments(@RequestParam Long id){
+        Comment comment = service.read(Comment.class, id);
         return ResponseEntity.ok(comment);
     }
 
     @GetMapping("/comments")
-    public ResponseEntity<List<Comment>> getComments(@RequestHeader(Credentials.AUTHORIZATION) String header){
-        Credentials credentials = new Credentials(header);
-        List<Comment> comments = service.readList(credentials, Comment.class);
+    public ResponseEntity<List<Comment>> getComments(){
+        List<Comment> comments = service.readList(Comment.class);
         return comments.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(comments);
     }
 
     @PutMapping("/comment")
-    public ResponseEntity<List<Comment>> putComment(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                    @RequestBody Comment comment){
-        Credentials credentials = new Credentials(header);
-        service.update(credentials, comment);
+    public ResponseEntity<List<Comment>> putComment(@RequestBody Comment comment){
+        service.update(comment);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/comment")
-    public ResponseEntity<List<Comment>> deleteComment(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                       @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        service.delete(credentials, Comment.class, id);
+    public ResponseEntity<List<Comment>> deleteComment(@RequestParam Long id){
+        service.delete(Comment.class, id);
         return ResponseEntity.noContent().build();
     }
 
     //fact
     @PostMapping("/fact")
-    public ResponseEntity<Void> postFact(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                         @RequestBody Fact fact){
-        Credentials credentials = new Credentials(header);
-        service.create(credentials, fact);
+    public ResponseEntity<Void> postFact(@RequestBody Fact fact){
+        service.create(fact);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{animal_id}/fact")
+    public ResponseEntity<Void> postAnimalFact(@PathVariable("animal_id") Long animal_id, @RequestBody Fact fact){
+        Animal animal = service.read(Animal.class, animal_id);
+        fact.setAnimal(animal);
+        service.create(fact);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/fact")
-    public ResponseEntity<Fact> getFacts(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                         @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        Fact fact = service.read(credentials, Fact.class, id);
+    public ResponseEntity<Fact> getFacts(@RequestParam Long id){
+        Fact fact = service.read(Fact.class, id);
         return ResponseEntity.ok(fact);
     }
 
     @GetMapping("/facts")
-    public ResponseEntity<List<Fact>> getFacts(@RequestHeader(Credentials.AUTHORIZATION) String header){
-        Credentials credentials = new Credentials(header);
-        List<Fact> facts = service.readList(credentials, Fact.class);
+    public ResponseEntity<List<Fact>> getFacts(){
+        List<Fact> facts = service.readList(Fact.class);
         return facts.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(facts);
     }
 
     @PutMapping("/fact")
-    public ResponseEntity<List<Fact>> putFact(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                              @RequestBody Fact fact){
-        Credentials credentials = new Credentials(header);
-        service.update(credentials, fact);
+    public ResponseEntity<List<Fact>> putFact(@RequestBody Fact fact){
+        service.update(fact);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/fact")
-    public ResponseEntity<List<Fact>> deleteFact(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                 @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        service.delete(credentials, Fact.class, id);
+    public ResponseEntity<List<Fact>> deleteFact(@RequestParam Long id){
+        service.delete(Fact.class, id);
         return ResponseEntity.noContent().build();
     }
 
     //feedback
     @PostMapping("/feedback")
-    public ResponseEntity<Void> postFeedback(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                             @RequestBody Feedback feedback){
-        Credentials credentials = new Credentials(header);
-        service.create(credentials, feedback);
+    public ResponseEntity<Void> postFeedback(@RequestBody Feedback feedback){
+        service.create(feedback);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/feedback")
-    public ResponseEntity<Feedback> getFeedbacks(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                 @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        Feedback feedback = service.read(credentials, Feedback.class, id);
+    public ResponseEntity<Feedback> getFeedbacks(@RequestParam Long id){
+        Feedback feedback = service.read(Feedback.class, id);
         return ResponseEntity.ok(feedback);
     }
 
     @GetMapping("/feedbacks")
-    public ResponseEntity<List<Feedback>> getFeedbacks(@RequestHeader(Credentials.AUTHORIZATION) String header){
-        Credentials credentials = new Credentials(header);
-        List<Feedback> feedbacks = service.readList(credentials, Feedback.class);
+    public ResponseEntity<List<Feedback>> getFeedbacks(){
+        List<Feedback> feedbacks = service.readList(Feedback.class);
         return feedbacks.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(feedbacks);
     }
 
     @PutMapping("/feedback")
-    public ResponseEntity<List<Feedback>> putFeedback(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                      @RequestBody Feedback feedback){
-        Credentials credentials = new Credentials(header);
-        service.update(credentials, feedback);
+    public ResponseEntity<List<Feedback>> putFeedback(@RequestBody Feedback feedback){
+        service.update(feedback);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/feedback")
-    public ResponseEntity<List<Feedback>> deleteFeedback(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                         @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        service.delete(credentials, Feedback.class, id);
+    public ResponseEntity<List<Feedback>> deleteFeedback(@RequestParam Long id){
+        service.delete(Feedback.class, id);
         return ResponseEntity.noContent().build();
     }
 
     //image
     @PostMapping("/image")
-    public ResponseEntity<Void> postImage(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                          @RequestBody Image image){
-        Credentials credentials = new Credentials(header);
-        service.create(credentials, image);
+    public ResponseEntity<Void> postImage(@RequestBody Image image){
+        service.create(image);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/image")
-    public ResponseEntity<Image> getImages(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                           @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        Image image = service.read(credentials, Image.class, id);
+    public ResponseEntity<Image> getImages(@RequestParam Long id){
+        Image image = service.read(Image.class, id);
         return ResponseEntity.ok(image);
     }
 
     @GetMapping("/images")
-    public ResponseEntity<List<Image>> getImages(@RequestHeader(Credentials.AUTHORIZATION) String header){
-        Credentials credentials = new Credentials(header);
-        List<Image> images = service.readList(credentials, Image.class);
+    public ResponseEntity<List<Image>> getImages(){
+        List<Image> images = service.readList(Image.class);
         return images.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(images);
     }
 
     @PutMapping("/image")
-    public ResponseEntity<List<Image>> putImage(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                @RequestBody Image image){
-        Credentials credentials = new Credentials(header);
-        service.update(credentials, image);
+    public ResponseEntity<List<Image>> putImage(@RequestBody Image image){
+        service.update(image);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/image")
-    public ResponseEntity<List<Image>> deleteImage(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                   @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        service.delete(credentials, Image.class, id);
+    public ResponseEntity<List<Image>> deleteImage(@RequestParam Long id){
+        service.delete(Image.class, id);
         return ResponseEntity.noContent().build();
     }
 
     //suggestion
     @PostMapping("/suggestion")
-    public ResponseEntity<Void> postSuggestion(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                               @RequestBody Suggestion suggestion){
-        Credentials credentials = new Credentials(header);
-        service.create(credentials, suggestion);
+    public ResponseEntity<Void> postSuggestion(@RequestBody Suggestion suggestion){
+        service.create(suggestion);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/suggestion")
-    public ResponseEntity<Suggestion> getSuggestions(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                     @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        Suggestion suggestion = service.read(credentials, Suggestion.class, id);
+    public ResponseEntity<Suggestion> getSuggestions(@RequestParam Long id){
+        Suggestion suggestion = service.read(Suggestion.class, id);
         return ResponseEntity.ok(suggestion);
     }
 
     @GetMapping("/suggestions")
-    public ResponseEntity<List<Suggestion>> getSuggestions(@RequestHeader(Credentials.AUTHORIZATION) String header){
-        Credentials credentials = new Credentials(header);
-        List<Suggestion> suggestions = service.readList(credentials, Suggestion.class);
+    public ResponseEntity<List<Suggestion>> getSuggestions(){
+        List<Suggestion> suggestions = service.readList(Suggestion.class);
         return suggestions.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(suggestions);
     }
 
     @PutMapping("/suggestion")
-    public ResponseEntity<List<Suggestion>> putSuggestion(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                          @RequestBody Suggestion suggestion){
-        Credentials credentials = new Credentials(header);
-        service.update(credentials, suggestion);
+    public ResponseEntity<List<Suggestion>> putSuggestion(@RequestBody Suggestion suggestion){
+        service.update(suggestion);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/suggestion")
-    public ResponseEntity<List<Suggestion>> deleteSuggestion(@RequestHeader(Credentials.AUTHORIZATION) String header,
-                                                             @RequestParam Long id){
-        Credentials credentials = new Credentials(header);
-        service.delete(credentials, Suggestion.class, id);
+    public ResponseEntity<List<Suggestion>> deleteSuggestion(@RequestParam Long id){
+        service.delete(Suggestion.class, id);
         return ResponseEntity.noContent().build();
     }
 }

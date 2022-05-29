@@ -37,8 +37,7 @@ public class CrudService {
 
 
     @Transactional
-    public <T extends BaseModel> void create (Credentials credentials, T model){
-        checkCredentials(credentials);
+    public <T extends BaseModel> void create (T model){
         try {
             BaseModelRepository<T> repository = getRepository(model.getClass());
             model.setCreatedAt(LocalDateTime.now());
@@ -54,8 +53,7 @@ public class CrudService {
         }
     }
 
-    public <T extends BaseModel> T read(Credentials credentials, Class modelClass, Long id){
-        checkCredentials(credentials);
+    public <T extends BaseModel> T read(Class modelClass, Long id){
         try {
             BaseModelRepository<T> repository = getRepository(modelClass);
             return findIfExists(repository, id);
@@ -69,8 +67,7 @@ public class CrudService {
         }
     }
 
-    public <T extends BaseModel> List<T> readList(Credentials credentials, Class modelClass){
-        checkCredentials(credentials);
+    public <T extends BaseModel> List<T> readList(Class modelClass){
         try {
             BaseModelRepository<T> repository = getRepository(modelClass);
             return (List<T>) repository.findAll();
@@ -85,8 +82,7 @@ public class CrudService {
     }
 
     @Transactional
-    public <T extends BaseModel> void update(Credentials credentials, T model){
-        checkCredentials(credentials);
+    public <T extends BaseModel> void update(T model){
         try {
             BaseModelRepository<T> repository = getRepository(model.getClass());
             T ifExists = findIfExists(repository, model.getId());
@@ -103,8 +99,7 @@ public class CrudService {
     }
 
     @Transactional
-    public <T extends BaseModel> void delete(Credentials credentials, Class modelClass, Long id){
-        checkCredentials(credentials);
+    public <T extends BaseModel> void delete(Class modelClass, Long id){
         try {
             BaseModelRepository<T> repository = getRepository(modelClass);
             T ifExists = findIfExists(repository, id);
@@ -116,12 +111,6 @@ public class CrudService {
             } else {
                 throw CustomException.objectCouldNotBeDeleted();
             }
-        }
-    }
-
-    private void checkCredentials(Credentials credentials) {
-        if(!adminName.equals(credentials.getName()) || !adminPassword.equals(credentials.getPassword())) {
-            throw badCredentials();
         }
     }
 
