@@ -46,7 +46,7 @@ public class RecommendationServiceTest {
     @BeforeAll
     public static void setup() {
 
-        animal = Optional.of(new Animal(1L, null, "panda", LocalDateTime.now(), LocalDateTime.now()));
+        animal = Optional.of(new Animal(1L, null, "a","panda", LocalDateTime.now(), LocalDateTime.now()));
         suggestion = Optional.of(new Suggestion(1L, animal.get(), null, "Jim", "Pandas need at least 2 different bamboo species in their range to avoid starvation", false, false, now, now));
         suggestionApproved = Optional.of(new Suggestion(2L, animal.get(), null, "Jim", "Pandas need at least 2 different bamboo species in their range to avoid starvation", true, false, now, now));
 

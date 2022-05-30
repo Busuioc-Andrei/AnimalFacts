@@ -39,7 +39,7 @@ public class RandomServiceTest {
 
     @BeforeAll
     public static void setup() {
-        animal = Optional.of(new Animal(1L, null, "panda", now, now));
+        animal = Optional.of(new Animal(1L, null, "a","panda", now, now));
         emptyFacts = new ArrayList<>();
         facts = new ArrayList<>();
         facts.add(new Fact(1L, animal.get(), null, null, "Giant pandas spend 10-16 hours a day feeding, mainly on bamboo.", now, now));

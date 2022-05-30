@@ -38,7 +38,7 @@ public class CrudServiceTest {
 
     @BeforeAll
     public static void setup() {
-        animal = Optional.of(new Animal(1L, null, "panda", LocalDateTime.now(), LocalDateTime.now()));
+        animal = Optional.of(new Animal(1L, null, "a","panda", LocalDateTime.now(), LocalDateTime.now()));
         animals.add(animal.get());
     }
 

@@ -17,9 +17,13 @@ public class Animal extends BaseModel{
     @Column(length = 100, unique = true, nullable = false)
     private String name;
 
-    public Animal(Long id, List<Image> images, String name, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    @Column(length = 500)
+    private String imageUrl;
+
+    public Animal(Long id, List<Image> images, String imageUrl, String name, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
         this.images = images;
+        this.imageUrl = imageUrl;
         this.name = name;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
@@ -50,7 +54,16 @@ public class Animal extends BaseModel{
         if(model != null) {
             Animal animal = (Animal) model;
             this.name = animal.getName();
+            this.imageUrl = animal.getImageUrl();
             this.modifiedAt = LocalDateTime.now();
         }
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
